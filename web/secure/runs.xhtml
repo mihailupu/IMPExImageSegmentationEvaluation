@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--xmlns:p="http://primefaces.prime.com.tr/ui"  xmlns:p="http://primefaces.org/ui"-->
+<html xmlns="http://www.w3.org/1999/xhtml"      
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>IMPEx Image Extraction Evaluation</title>
+        <link href="mycss.css" title="compact" rel="stylesheet" type="text/css"/>
+
+    </h:head>
+
+    <h:body>
+        <!--<h:link value="descriptions page" outcome="descriptions" /><br/> -->
+
+        <f:metadata>  
+            <f:viewParam name="currentEvaluation" value="#{runEvalBean.currentEvaluationSet}" />  
+        </f:metadata> 
+        <h:form id="logoutform">
+            <p>#{userManager.current.fullname}
+                <p:commandLink id="logoutButton" value="Logout" action="#{userManager.logout}" />
+            </p>
+        </h:form>
+        <h:form enctype="multipart/form-data">
+
+            <p:panel styleClass="behind">
+                <f:facet name="header">
+                    <h:outputText value="Evaluation set: " />
+                    <h:outputText style="font-style: italic;color:#FF0000" value="#{runEvalBean.currentEvaluationSet}"  />
+                </f:facet>
+                <p:panel styleClass="front" header="New run">
+
+                    <h:outputLabel for="nameValue" value="Name:"/>
+                    <p:inputText id="nameValue" value="#{runEvalBean.newRunName}" required="true" requiredMessage="You must provide a name for your run"/><br/><br/>
+                    <h:outputLabel for="descriptionValue" value="Description"/>
+                    <p:inputTextarea id="descriptionValue" value="#{runEvalBean.newRunDescription}" style="width:100%" required="true" requiredMessage="You must say what you did in this run" />
+                    <br/>
+                    <h:outputLabel for="fileuploader" value="Zip archive of your results, grouped in folders" />
+                    <p:fileUpload value="#{runEvalBean.runFile}"  
+                                  mode="simple"                              
+                                  id="fileuploader"
+                                  update="messages,carousel"
+                                  sizeLimit="10000000"   
+                                  allowTypes="/(\.|\/)(zip)$/"/>  
+
+
+                    <h:commandButton value="Add Run" action="#{runEvalBean.handleFileUpload}" /> 
+
+                    <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />         
+                </p:panel>    
+
+                <p:panel styleClass="front" header="Existing runs">
+                    <p:dataTable id="carousel" var="testSet" value="#{runEvalBean.runs}">  
+
+                        <p:column headerText="Name" style="width:10%">  
+                            <h:outputText value="#{testSet.name}" />  
+                        </p:column>  
+
+                        <p:column headerText="Description" style="width:70%">  
+                            <h:outputText value="#{testSet.description}" />  
+                        </p:column>  
+                        <p:column style="width:10%">  
+                            <p:button outcome="results" id="results"  title="Results"
+                                      value="Results" >
+                                <f:param name="currentRun" value="#{testSet.name}"/>
+                                <f:param name="currentEvaluation" value="#{runEvalBean.currentEvaluationSet}"/>
+                            </p:button> 
+                        </p:column>  
+                        <p:column style="width:10%">  
+                            <p:button outcome="imageLists" id="view"  title="Work on this run"
+                                      value="Work on this" >
+                                <f:param name="currentRun" value="#{testSet.name}"/>
+                                <f:param name="currentEvaluation" value="#{runEvalBean.currentEvaluationSet}"/>
+                            </p:button> 
+                        </p:column>  
+
+                    </p:dataTable> 
+                </p:panel>
+
+            </p:panel>
+        </h:form>
+    </h:body>
+</html>
+

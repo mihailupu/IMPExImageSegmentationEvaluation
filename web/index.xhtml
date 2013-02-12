@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"      
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Evaluation of Image Segmentation in Patents</title>
+        <style type="text/css">
+.subtitle {
+  font-family: courier, "courier new", monospace;
+  font-size: 34px;
+  color: #575757;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: small-caps;
+  letter-spacing: 0px;
+  line-height: 20px;
+  text-align: right;
+}
+
+td {
+    text-align: center;
+}
+.ui-widget {
+    font-family: Verdana,sans-serif;
+    font-size:10pt;
+}
+  </style>
+    </h:head>
+    <h:body>
+        <p:growl id="growl" showDetail="true" life="3000" />  
+        <h:form>  
+            <h:panelGrid style="margin-left: auto; margin-right: auto; background-color: #FFFFFF" columns="1" cellpadding="5" border="0">
+                <p:graphicImage value="images/impex.png"  />
+                <h:outputText  styleClass="subtitle" value="Patent Image Segmentation Evaluation Tool" />
+            </h:panelGrid>
+
+            <h:panelGrid style="margin-left: auto; margin-right: auto; background-color: #EEEEEE" columns="2" cellpadding="5" border="0">
+                <h:outputLabel styleClass="ui-widget" for="username" value="Username:" />  
+                <p:inputText value="#{userManager.username}"   
+                             id="username" required="true" label="username" 
+                             style="width: 200px"/>  
+
+                <h:outputLabel styleClass="ui-widget" for="password" value="Password:" />  
+                <h:inputSecret value="#{userManager.password}"   
+                               id="password" required="true" label="password" 
+                               style="width: 200px"/>  
+                <h:outputText />
+                <p:commandButton style="float:right;" id="loginButton" value="Login" update=":growl"   
+                                 action="#{userManager.login}">
+                    <f:param name="currentUsername" value="#{userManager.username}"/>
+                </p:commandButton>
+
+            </h:panelGrid>  
+
+        </h:form>  
+    </h:body>
+</html>
+

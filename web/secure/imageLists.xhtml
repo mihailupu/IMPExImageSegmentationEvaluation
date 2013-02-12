@@ -1,0 +1,147 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--xmlns:p="http://primefaces.prime.com.tr/ui"  xmlns:p="http://primefaces.org/ui"-->
+<html xmlns="http://www.w3.org/1999/xhtml"      
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>IMPEx Image Extraction Evaluation</title>
+
+
+        <link href="mycss.css" title="compact" rel="stylesheet" type="text/css"/>
+    </h:head>
+
+    <h:body >
+        <h:form id="logoutform">
+            <p>#{userManager.current.fullname}
+                <!-- <p:commandLink id="logoutButton" value="Logout" action="# {userManager.logout}" /> -->
+            </p>
+        </h:form>
+        <p:panel id="everything">
+            <f:metadata> 
+                <f:viewParam name="currentEvaluation" value="#{imageListsBean.evaluation}" />
+
+                <f:viewParam name="currentRun" value="#{imageListsBean.currentRun}" />  
+            </f:metadata> 
+
+            <h:form id="docForm">
+
+<!-- <p:spinner id="spinner" min="1" max="#{imageListsBean.evaluationSetSize}"  immediate="false"   value="#{imageListsBean.patentCounter}" >
+    <p:ajax  oncomplete="javascript:location.reload(true)" process="@this"
+             update=":formForList:candidatesList,:formForList:goldList,:messages,currentUcid " />
+</p:spinner>-->
+                <h:outputText id="status" value=" Doing document #{imageListsBean.patentCounter+1} of #{imageListsBean.evaluationSetSize} "/>
+                <p:commandButton process="@form" id="PreviousButton" update=":formForList:tab1,:formForList:tab2,status,:formForList:candidatesList,:formForList:goldList,:messages,currentUcid"
+                                 value="Previous" title="Save and go back to previous document" actionListener="#{imageListsBean.previousDocument}" /> 
+                <p:commandButton process="@form" id="NextButton" update=":formForList:tab1,:formForList:tab2,status,:formForList:candidatesList,:formForList:goldList,:messages,currentUcid"
+                                 value="Next" title="Save and move to next document" actionListener="#{imageListsBean.nextDocument}" />  
+                <p:commandButton process="@form" id="DoneButton" update=":formForList:tab1,:formForList:tab2,status,:formForList:candidatesList,:formForList:goldList,currentUcid"
+                                 value="Done" ajax="false" title="Stop working on this run" action="runs.xhtml" actionListener="#{imageListsBean.done}" /> 
+                <!-- <h:outputText escape="false" value="# {columnWidth}" /> -->
+                <h:outputText id="currentUcid" value="#{imageListsBean.currentUcid}" />
+
+            </h:form>
+            <p:blockUI  block=":everything" trigger=":docForm:NextButton,:docForm:PreviousButton">                  
+                <p:graphicImage style="width:30px" value="/images/ajax-loader.gif"/>  
+            </p:blockUI>   
+            <p:messages id="messages" showDetail="true" autoUpdate="false"  />         
+
+            <h:form id="formForList">
+
+                <p:panel id="tab1" header="Matched">
+
+                    <p:dataTable id="matches" var="match" value="#{imageListsBean.results}">  
+
+                        <p:column headerText="Candidate" style="width:40%">  
+                            <h:outputText value="#{match.filename}" />  
+                        </p:column>                          
+                        <p:column headerText="Relation" style="width:10%">  
+                            <h:outputText value="#{match.judgment}" />  
+                        </p:column>        
+                        <p:column headerText="Gold" style="width:40%">  
+                            <h:outputText value="#{match.goldFilename}" />  
+                        </p:column>        
+
+                        <p:column style="width:10%">  
+                            <p:commandButton  value="Undo" id="matchSelectButton" 
+                                              update=":formForList:tab1,:formForList:goldList,:formForList:candidatesList,:messages" actionListener="#{imageListsBean.unMatch}" 
+                                              title="Not matched">  
+                                <f:param name="filename" value="#{match.filename}" /> 
+                                <f:param name="goldFilename" value="#{match.goldFilename}" /> 
+                            </p:commandButton>  
+                        </p:column>  
+
+                    </p:dataTable> 
+                </p:panel>
+
+
+                <p:commandButton  process="@this" id="save" value="Process selection" style="width: 100%" actionListener="#{imageListsBean.processSelection}"
+                                  update=":messages,goldList,candidatesList,tab1,tab2"/>
+                <h:panelGrid columns="2" styleClass="myPanelGrid" >  
+                    <p:panel styleClass="myHalfPage" header="Run results">
+                        <h:inputHidden id="txt5" value="#{imageListsBean.candidateImageWidth}" />  
+                        <h:outputText id="output5" value="Width of image (pixels) : #{imageListsBean.candidateImageWidth}" />
+                        <p:slider for="txt5" display="output5" minValue="10" maxValue="1000" >  
+                            <p:ajax event="slideEnd" process="txt5" update="candidatesList" />  
+                            <!-- <p:ajax event="slideEnd" listener="# {sliderBean.onSlideEnd}"  update="candidatesList" />-->  
+                        </p:slider> 
+                        <p:dataGrid id="candidatesList" value="#{imageListsBean.candidates}" var="candidateImage" columns="10" >  
+                            <p:column>  
+                                <p:commandLink process="@this" update="candidatesList,:messages" actionListener="#{imageListsBean.toggleRunImage}">
+                                    <p:graphicImage  rendered="#{candidateImage.visible}" id="candidate" value="#{candidateImage.path}" styleClass="#{candidateImage.style}" width="#{imageListsBean.candidateImageWidth}" />                                                           
+                                    <f:param name="cf" value="#{candidateImage.path}" />
+                                </p:commandLink>
+                            </p:column>  
+                        </p:dataGrid>  
+                    </p:panel>
+
+                    <p:panel styleClass="myHalfPage" header="Images from database">
+                        <h:inputHidden id="txt4" value="#{imageListsBean.goldImageWidth}" />  
+                        <h:outputText id="output4" value="Width of image (pixels) : #{imageListsBean.goldImageWidth}" />
+                        <p:slider for="txt4" display="output4" minValue="10" maxValue="1000" >  
+                            <p:ajax event="slideEnd" process="txt4" update="goldList" />  
+                            <!-- <p:ajax event="slideEnd" listener="# {sliderBean.onSlideEnd}"  update="candidatesList" />-->  
+                        </p:slider> 
+                        <p:dataGrid id="goldList" value="#{imageListsBean.gold}" var="goldImage" columns="10" >  
+                            <p:column >  
+                                <p:commandLink process="@this" update="goldList,:messages" actionListener="#{imageListsBean.toggleGoldImage}">
+                                    <p:graphicImage rendered="#{goldImage.visible}" width="#{imageListsBean.goldImageWidth}" id="gold" value="#{goldImage.path}" styleClass="#{goldImage.style}" />
+                                    <f:param name="cf" value="#{goldImage.path}" />
+                                    <h:outputText id="match" rendered="#{goldImage.isGoldMatch}" value="MATCH" styleClass="overlayMatch"/>
+                                    <h:outputText id="duplicate" rendered="#{goldImage.isGoldDuplicate}" value="DUPLICATE" styleClass="overlayDuplicate"/>
+                                    <h:outputText id="subimage" rendered="#{goldImage.isGoldSubimage}" value="CONTAINS" styleClass="overlaySubimage"/>
+                                    <h:outputText id="supraimage" rendered="#{goldImage.isGoldSupraimage}" value="IS CONTAINED" styleClass="overlaySupraimage"/>
+                                </p:commandLink>
+
+                            </p:column>  
+                        </p:dataGrid>  
+
+                    </p:panel>
+
+                </h:panelGrid>
+                <p:panel id="tab2" header="Duplicates" >                    
+                    <p:dataTable id="duplicates" var="duplicate" value="#{imageListsBean.duplicatesGold}">  
+
+                        <p:column headerText="Filename" style="width:90%">  
+                            <h:outputText value="#{duplicate.path}" />  
+                        </p:column>                          
+
+                        <p:column style="width:10%">  
+                            <p:commandButton  value="Undo" id="duplicateSelectButton" 
+                                              update=":formForList:tab2,:formForList:goldList,:messages" actionListener="#{imageListsBean.unDuplicate}" 
+                                              title="Not duplicate">  
+                                <f:param name="path" value="#{duplicate.path}" /> 
+                            </p:commandButton>  
+                        </p:column>  
+
+                    </p:dataTable>                      
+                </p:panel>
+            </h:form>
+
+        </p:panel>
+
+
+    </h:body>
+</html>
+

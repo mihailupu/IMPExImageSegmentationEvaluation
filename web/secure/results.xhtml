@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--xmlns:p="http://primefaces.prime.com.tr/ui"  xmlns:p="http://primefaces.org/ui"-->
+<html xmlns="http://www.w3.org/1999/xhtml"      
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>IMPEx Image Extraction Evaluation</title>
+
+
+        <link href="mycss.css" title="compact" rel="stylesheet" type="text/css"/>
+    </h:head>
+
+    <h:body >
+        <p>#{userManager.current.fullname}
+        </p>
+        <p:panel id="everything">
+            <f:metadata> 
+                <f:viewParam name="currentEvaluation" value="#{resultsBean.currentEvaluationSet}" />
+                <f:viewParam name="currentRun" value="#{resultsBean.currentRun}" />  
+            </f:metadata> 
+
+            <h:form id="docForm">
+                <p:panelGrid  columns="6"> 
+                    <f:facet name="header">  
+                        Results for run #{resultsBean.currentRun} of evaluation #{resultsBean.currentEvaluationSet}
+                    </f:facet> 
+                    <h:outputText value="Number of candidate images explored so far :"/><h:outputText value="#{resultsBean.candidatesInRun}"/><h:outputText />
+                    <h:outputText value="Number of gold images explored so far :"/><h:outputText value="#{resultsBean.goldInRun}"/><h:outputText />
+
+                    <h:outputText value="Percentage of candidates MATCHED :"/><h:outputText value="#{resultsBean.percentageCandidatesMatched}"/><h:outputText />
+                    <h:outputText value="This represents :"/><h:outputText value="#{resultsBean.percentageGoldMatched}"/><h:outputText value="of gold images"/>
+
+                    <h:outputText value="Percentage of candidates SUB-IMAGE :"/><h:outputText value="#{resultsBean.percentageCandidatesSubImage}"/><h:outputText />
+                    <h:outputText value="This represents :"/><h:outputText value="#{resultsBean.percentageGoldSubImage}"/><h:outputText value="of gold images"/>
+
+                    <h:outputText value="Percentage of candidates SUPRA-IMAGE :"/><h:outputText value="#{resultsBean.percentageCandidatesSupraImage}"/><h:outputText />
+                    <h:outputText value="This represents :"/><h:outputText value="#{resultsBean.percentageGoldSupraImage}"/><h:outputText value="of gold images"/>
+
+                    <h:outputText value="Percentage of duplicate golds :"/><h:outputText value="#{resultsBean.percentageDuplicates}"/><h:outputText />
+
+                </p:panelGrid> 
+                <p:commandButton process="@form" id="DoneButton" update=""
+                                 value="Done" ajax="false" title="Go back to the list of runs" action="runs.xhtml"  /> 
+
+
+            </h:form>
+
+
+            <p:messages id="messages" showDetail="true" autoUpdate="false"  />         
+
+        </p:panel>
+
+
+    </h:body>
+</html>
+

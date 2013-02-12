@@ -1,0 +1,245 @@
+/* 
+    Document   : mycss
+    Created on : Feb 17, 2012, 12:58:07 PM
+    Author     : mihailupu
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.ui-widget .ui-widget{
+    font-size:11pt;
+}
+
+.ui-datagrid-data {
+    width: 100%;
+    background:  white;
+    padding: 1px;
+    border-style: none;
+    border-color: white;
+
+
+}
+
+.ui-datagrid .ui-paginator {
+    text-align: center;
+    overflow: hidden;
+    border-style: none;
+    border-color:white;
+    background:  white;
+
+
+}
+
+.ui-datagrid-column {
+    padding: 10px;
+    background-color:  white;
+    border-style: none;
+    border-color: white;
+    float:left;
+    position:relative;
+}
+
+.overlay{
+    position:absolute; /* absolute position (so we can position it where we want)*/  
+
+    top:20px; /* position will be on bottom */  
+    left:0px;  
+    width:100%; 
+
+    /* styling bellow */  
+    text-align: center;
+    background-color:black;  
+    font-family: 'tahoma';  
+    font-size:28px;  
+    color:white;  
+    opacity:0.2; /* transparency */  
+    filter:alpha(opacity=20); /* IE transparency */ 
+}
+
+.overlayMatch{
+    position:absolute; /* absolute position (so we can position it where we want)*/     
+    top:20px; /* position will be on bottom */  
+    left:0px;  
+    width:100%; 
+
+    /* styling bellow */  
+    text-align: center;
+    background-color:green;  
+    font-family: 'tahoma';  
+    font-size:28px;  
+    color:white;  
+    opacity:0.3; /* transparency */  
+    filter:alpha(opacity=30); /* IE transparency */ 
+}
+
+
+.overlayDuplicate{
+    position:absolute; /* absolute position (so we can position it where we want)*/     
+    top:20px; /* position will be on bottom */  
+    left:0px;  
+    width:100%; 
+
+    /* styling bellow */  
+    text-align: center;
+    background-color:red;  
+    font-family: 'tahoma';  
+    font-size:28px;  
+    color:white;  
+    opacity:0.3; /* transparency */  
+    filter:alpha(opacity=30); /* IE transparency */ 
+}
+
+.overlaySubimage{
+    position:absolute; /* absolute position (so we can position it where we want)*/     
+    top:20px; /* position will be on bottom */  
+    left:0px;  
+    width:100%; 
+
+    /* styling bellow */  
+    text-align: center;
+    background-color:#ff6600;  
+    font-family: 'tahoma';  
+    font-size:28px;  
+    color:white;  
+    opacity:0.3; /* transparency */  
+    filter:alpha(opacity=30); /* IE transparency */ 
+}
+
+.overlaySupraimage{
+    position:absolute; /* absolute position (so we can position it where we want)*/     
+    top:20px; /* position will be on bottom */  
+    left:0px;  
+    width:100%; 
+
+    /* styling bellow */  
+    text-align: center;
+    background-color:#0033ff;  
+    font-family: 'tahoma';  
+    font-size:35px;  
+    color:white;  
+    opacity:0.3; /* transparency */  
+    filter:alpha(opacity=30); /* IE transparency */ 
+}
+
+
+.overlay_content{  
+    padding:10px;  
+    margin:0px;  
+}  
+
+.ui-datagrid-content-empty {
+    padding: 0px 0px;
+}
+
+.myPanelGrid td {
+    vertical-align: top;
+    border-style: none;
+    padding:1px;
+    border-color: green;
+}
+
+.myPanelGrid {
+    width:100%; 
+    padding: 1px;
+    border-style: none;
+    background-color:  whitesmoke;
+    border-color: white;
+
+}
+
+.ui-panel-content{
+    padding:10px;    
+    border-color: white;
+    margin:auto;
+}
+
+.myHalfPage{
+    background-color: white;
+    border-style: none;
+    padding:0px;
+    min-width:450px;
+    max-width:98%;
+    width:99%;
+    border-color: white;
+}
+
+slotActive{
+    background-color:yellowgreen;
+}
+
+img {
+    padding:1px;
+    border:5px solid #ffffff;
+    background-color:#ffffff;
+    max-width: 100%;
+    /*    width: 350px; */
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+}
+
+.img-candidateSelected{
+    border:5px solid green;
+}
+
+
+
+.img-goldselectedMatch{
+    border:5px solid green;
+}
+
+.img-goldselectedDuplicate{
+    border:5px solid #FF0000;
+}
+
+.img-goldselectedSubImage{
+    border:5px solid #ff6600;
+}
+
+.img-goldselectedSupraImage{
+    border:5px solid #0033ff;
+}
+
+
+.ui-blockui{position:absolute;top:0;left:0;text-align:center;}
+
+.ui-blockui-content{
+    position:absolute;
+    top:10%;
+    left:10%;
+    background-color: #AAAAAA;
+
+
+}
+
+.hide { visibility:hidden; }
+
+
+.ui-panel .ui-panel-titlebar {
+    padding: 0.5em 1em 0.3em;
+    background: -moz-linear-gradient(center top , rgba(170, 204, 204, 0.8), rgba(170, 204, 204, 0)) repeat scroll 0% 0% #bbeeff;
+}
+
+.ui-panel .ui-panel-content {
+    background :#eef5f5;  
+}
+
+/*
+.front.ui-panel .ui-panel-titlebar {
+    padding: 0.5em 1em 0.3em;
+    background: -moz-linear-gradient(center top , rgba(170, 204, 204, 0.8), rgba(170, 204, 204, 0)) repeat scroll 0% 0% #bbeeff;
+}
+
+.front.ui-panel .ui-panel-content {
+    background :#eef5f5;  
+}
+
+.behind.ui-panel .ui-panel-titlebar  {
+    padding: 0.5em 1em 0.3em;
+    background: -moz-linear-gradient(center top , rgba(204, 204, 204, 0.8), rgba(204, 204, 204, 0)) repeat scroll 0% 0% #cceeee;
+}
+
+.behind.ui-panel .ui-panel-content {
+    background :#aacccc;  
+}
+*/
